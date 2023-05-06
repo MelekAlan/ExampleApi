@@ -6,7 +6,7 @@
 
 - The `dev` image is built and pushed by a github action when pushing to the `develop` branch
 - The `prod` image is built and pushed by a github action when pushing to the `main` branch
-- The Images are pushed to the OVH Harbor Registry:
+- The Images are pushed to the DockerHub Registry:
     - exampleapp/exampleapi:dev
     - exampleapp/exampleapi:prod
 
