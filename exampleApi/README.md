@@ -1,4 +1,4 @@
-# DotNet Example-Api including Dockerization and Pipeline
+# DotNet ExampleApi including Dockerization and Pipeline
 
 ## Github Actions pipeline
 
