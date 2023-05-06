@@ -1,0 +1,13 @@
+server:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: "letsencrypt"
+    hosts:
+      - host: argo.dev.example.com
+        paths: /
+    tls:
+      - secretName: argo-tls
+        hosts:
+          - argo.dev.example.com

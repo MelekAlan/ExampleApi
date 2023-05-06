@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nameOverride }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.nameOverride }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.nameOverride }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.nameOverride }}
+    spec:
+      containers:
+        - name: {{ .Values.nameOverride }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: 
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.name }}
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.name }}
+                  key: POSTGRES_HOST
+
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.name }}
+                  key: POSTGRES_HOST
+
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.name }}
+                  key: POSTGRES_PORT
+                  
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets.name }}

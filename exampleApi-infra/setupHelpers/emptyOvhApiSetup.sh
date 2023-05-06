@@ -1,0 +1,4 @@
+export OVH_APPLICATION_KEY=*
+export OVH_APPLICATION_SECRET=*
+export OVH_CONSUMER_KEY=*
+export OVH_ENDPOINT="ovh-eu"

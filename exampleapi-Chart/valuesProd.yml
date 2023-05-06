@@ -1,0 +1,56 @@
+image:
+  repository: exampleapp/exampleapi
+  tag: prod
+  pullPolicy: Always
+
+nameOverride: exampleapi
+fullnameOverride: exampleapi
+
+replicaCount: 1
+
+namespace: application
+
+service:
+  name: exampleapi
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "12k"
+  tls:
+    - hosts:
+        - exampleapi.example.com
+      secretName: exampleapi-letsencrypt
+  rules:
+    - host: exampleapi.example.com
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: exampleapi
+                port:
+                  number: 80
+
+imagePullSecrets:
+  - name: pull-secret
+
+database:
+  name: exampleapi-postgredb
+  user: exampleapiuser
+  password: exampleapipassword
+  host: db.exampleapi
+  port: "5432"
+
+
+
+# Path: exampleapi\valuesProd.yaml

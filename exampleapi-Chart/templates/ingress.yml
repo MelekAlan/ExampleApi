@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.nameOverride }}
+  namespace: {{ .Values.namespace}}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.annotations."cert-manager.io/cluster-issuer" }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.annotations."kubernetes.io/ingress.class" }}
+    nginx.ingress.kubernetes.io/rewrite-target: {{ .Values.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" }}
+    nginx.ingress.kubernetes.io/use-regex: {{ .Values.ingress.annotations."nginx.ingress.kubernetes.io/use-regex" }}
+    nginx.ingress.kubernetes.io/proxy-buffer-size: {{ .Values.ingress.annotations."nginx.ingress.kubernetes.io/proxy-buffer-size" }}
+spec:
+  tls:
+    - hosts:
+      - {{ .Values.ingress.tls.hosts | toYaml | trim }}
+      secretName: {{ .Values.ingress.tls.secretName }}
+  rules:
+    - host: {{ .Values.ingress.rules.host }}
+      http:
+        paths:
+          - path: {{ .Values.ingress.rules.http.paths.path }}
+            pathType: {{ .Values.ingress.rules.http.paths.pathType }}
+            backend:
+              service:
+                name: {{ .Values.ingress.rules.http.paths.backend.service.name }}
+                port:
+                  number: {{ .Values.ingress.rules.http.paths.backend.service.port.number }}
+
+
+# Path: exampleapi\templates\service.yml
+
+
