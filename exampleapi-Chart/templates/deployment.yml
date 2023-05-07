@@ -36,7 +36,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.database.name }}
-                  key: POSTGRES_HOST
+                  key: POSTGRES_PASSWORD
 
             - name: POSTGRES_PORT
               valueFrom:
